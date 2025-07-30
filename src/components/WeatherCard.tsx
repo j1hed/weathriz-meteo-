@@ -15,59 +15,72 @@ interface WeatherCardProps {
 
 const WeatherCard = ({ weather }: WeatherCardProps) => {
   const getWeatherIcon = (condition: string) => {
-    if (condition.toLowerCase().includes('rain')) return '🌧️';
-    if (condition.toLowerCase().includes('snow')) return '❄️';
-    if (condition.toLowerCase().includes('cloud')) return '☁️';
-    if (condition.toLowerCase().includes('clear')) return '☀️';
-    return '🌤️';
+    const conditionLower = condition.toLowerCase();
+    if (conditionLower.includes('rain')) return '🌧';
+    if (conditionLower.includes('snow')) return '❄️';
+    if (conditionLower.includes('cloud')) return '☁️';
+    if (conditionLower.includes('clear') || conditionLower.includes('sunny')) return '☀️';
+    return '⛅';
   };
 
-  const getTemperatureColor = (temp: number) => {
-    if (temp < 0) return 'text-blue-400';
-    if (temp < 10) return 'text-blue-300';
-    if (temp < 20) return 'text-green-400';
-    if (temp < 30) return 'text-yellow-400';
-    return 'text-orange-400';
+  const getTemperatureRange = (temp: number) => {
+    const high = temp + Math.floor(Math.random() * 3) + 2;
+    const low = temp - Math.floor(Math.random() * 3) - 2;
+    return { high, low };
   };
+
+  const { high, low } = getTemperatureRange(weather.temperature);
 
   return (
-    <Card className="glass-card p-8 animate-weather-fade-in">
-      <div className="text-center space-y-6">
-        {/* Location */}
-        <div className="space-y-2">
-          <h1 className="text-2xl font-bold text-foreground text-shadow">
+    <Card className="apple-card p-8 bg-white/80 backdrop-blur-lg">
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="text-center space-y-1">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
             {weather.location}
-          </h1>
-          <p className="text-muted-foreground capitalize">
+          </h2>
+          <p className="text-base text-muted-foreground font-medium">
             {weather.description}
           </p>
         </div>
 
         {/* Main Temperature Display */}
-        <div className="space-y-4">
-          <div className="text-8xl animate-float">
+        <div className="text-center space-y-4">
+          <div className="text-7xl leading-none animate-apple-float">
             {getWeatherIcon(weather.condition)}
-          </div>
-          <div className={`text-6xl font-light ${getTemperatureColor(weather.temperature)} text-shadow-lg`}>
-            {Math.round(weather.temperature)}°
-          </div>
-          <div className="text-xl text-muted-foreground capitalize font-medium">
-            {weather.condition}
-          </div>
-        </div>
-
-        {/* Weather Details Grid */}
-        <div className="grid grid-cols-2 gap-6 pt-4">
-          <div className="space-y-2">
-            <div className="text-3xl opacity-60">💧</div>
-            <div className="text-sm text-muted-foreground">Humidity</div>
-            <div className="text-2xl font-semibold text-primary">{weather.humidity}%</div>
           </div>
           
           <div className="space-y-2">
-            <div className="text-3xl opacity-60">💨</div>
-            <div className="text-sm text-muted-foreground">Wind Speed</div>
-            <div className="text-2xl font-semibold text-primary">{weather.windSpeed} km/h</div>
+            <div className="text-7xl font-thin text-foreground tracking-tighter">
+              {Math.round(weather.temperature)}°
+            </div>
+            <div className="text-lg font-medium text-muted-foreground capitalize">
+              {weather.condition}
+            </div>
+            <div className="text-sm text-muted-foreground">
+              H:{high}° L:{low}°
+            </div>
+          </div>
+        </div>
+
+        {/* Weather Metrics */}
+        <div className="grid grid-cols-2 gap-4 pt-2">
+          <div className="apple-metric-card bg-white/60">
+            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
+              Humidity
+            </div>
+            <div className="text-2xl font-semibold text-foreground">
+              {weather.humidity}%
+            </div>
+          </div>
+          
+          <div className="apple-metric-card bg-white/60">
+            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
+              Wind
+            </div>
+            <div className="text-2xl font-semibold text-foreground">
+              {weather.windSpeed} km/h
+            </div>
           </div>
         </div>
       </div>

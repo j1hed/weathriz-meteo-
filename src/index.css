@@ -2,61 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Weather-themed design system with dynamic colors and glassmorphism effects */
+/* Apple-inspired design system with refined colors and elegant typography */
 
 @layer base {
   :root {
-    /* Base theme - Clear Sky */
-    --background: 203 100% 96%;
-    --foreground: 220 25% 15%;
+    /* Apple-style neutral palette */
+    --background: 0 0% 99%;
+    --foreground: 0 0% 6%;
 
-    /* Glass cards with transparency */
-    --card: 203 30% 95%;
-    --card-foreground: 220 25% 15%;
+    /* Clean card backgrounds */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 6%;
 
-    --popover: 203 30% 98%;
-    --popover-foreground: 220 25% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6%;
 
-    /* Weather-themed primary colors */
-    --primary: 211 85% 55%;
+    /* Apple blue as primary */
+    --primary: 211 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 211 100% 75%;
+    --primary-light: 211 100% 95%;
 
-    --secondary: 203 50% 85%;
-    --secondary-foreground: 220 25% 25%;
+    /* Subtle grays */
+    --secondary: 0 0% 97%;
+    --secondary-foreground: 0 0% 20%;
 
-    --muted: 203 40% 90%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 45 90% 65%;
-    --accent-foreground: 220 25% 15%;
+    --accent: 211 100% 96%;
+    --accent-foreground: 211 100% 20%;
 
-    /* Weather condition colors */
-    --sunny: 45 100% 60%;
-    --cloudy: 210 15% 65%;
-    --rainy: 211 50% 45%;
-    --stormy: 270 30% 35%;
-    --snowy: 200 25% 85%;
-
-    --destructive: 0 84.2% 60.2%;
+    /* System colors */
+    --destructive: 0 100% 67%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 203 40% 85%;
-    --input: 203 40% 90%;
-    --ring: 211 85% 55%;
+    --border: 0 0% 90%;
+    --input: 0 0% 95%;
+    --ring: 211 100% 50%;
 
-    /* Glass effects */
-    --glass-bg: 203 50% 95%;
-    --glass-border: 203 40% 80%;
-    --glass-shadow: 203 30% 70%;
+    /* Apple-style elevation and spacing */
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
 
-    /* Weather gradients */
-    --gradient-sky: linear-gradient(135deg, hsl(203, 100%, 85%) 0%, hsl(211, 85%, 70%) 100%);
-    --gradient-sunset: linear-gradient(135deg, hsl(45, 90%, 75%) 0%, hsl(25, 85%, 65%) 50%, hsl(340, 75%, 65%) 100%);
-    --gradient-storm: linear-gradient(135deg, hsl(270, 30%, 25%) 0%, hsl(240, 40%, 35%) 100%);
-    --gradient-night: linear-gradient(135deg, hsl(240, 60%, 15%) 0%, hsl(260, 50%, 25%) 100%);
+    /* Apple-style gradients */
+    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%);
+    --gradient-sky: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 50%, #F0F9FF 100%);
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -120,66 +114,102 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     background: var(--gradient-sky);
     min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: -0.01em;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply backdrop-blur-xl bg-white/20 border border-white/30 shadow-lg shadow-black/5;
+  .apple-card {
+    @apply bg-card border border-border/20 shadow-lg rounded-xl;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
   }
   
-  .weather-gradient-sky {
-    background: var(--gradient-sky);
+  .apple-hero-title {
+    @apply text-5xl font-bold tracking-tight;
+    background: linear-gradient(135deg, #1d1d1f 0%, #86868b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
   }
   
-  .weather-gradient-sunset {
-    background: var(--gradient-sunset);
+  .apple-subtitle {
+    @apply text-xl font-medium;
+    color: #86868b;
+    line-height: 1.381;
+    letter-spacing: -0.01em;
   }
   
-  .weather-gradient-storm {
-    background: var(--gradient-storm);
+  .apple-button {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-xl;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+    @apply transition-all duration-200 ease-out;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/50;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    letter-spacing: -0.005em;
   }
   
-  .weather-gradient-night {
-    background: var(--gradient-night);
+  .apple-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
-  .floating-animation {
-    animation: float 6s ease-in-out infinite;
+  .apple-metric-card {
+    @apply apple-card p-6 text-center;
+    @apply transition-all duration-300 ease-out;
   }
   
-  .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite alternate;
+  .apple-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-large);
   }
 }
 
 @layer utilities {
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .apple-text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
   
-  .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  .apple-blur {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 }
 
-@keyframes float {
+@keyframes apple-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes apple-scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes apple-float {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
-  }
-  100% {
-    box-shadow: 0 0 40px rgba(33, 150, 243, 0.6);
+    transform: translateY(-4px);
   }
 }

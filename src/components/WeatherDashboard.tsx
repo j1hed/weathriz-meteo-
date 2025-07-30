@@ -3,19 +3,21 @@ import { Card } from '@/components/ui/card';
 import WeatherScene3D from './WeatherScene3D';
 import WeatherCard from './WeatherCard';
 import useWeather from '@/hooks/useWeather';
-import { RefreshCw, MapPin } from 'lucide-react';
+import { RefreshCw, MapPin, Thermometer, Wind, Eye, Droplets } from 'lucide-react';
 
 const WeatherDashboard = () => {
   const { weather, loading, error, refreshWeather } = useWeather();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="glass-card p-12 text-center">
-          <div className="animate-pulse space-y-4">
-            <div className="text-6xl animate-float">🌤️</div>
-            <h2 className="text-2xl font-semibold text-foreground">Loading Weather...</h2>
-            <p className="text-muted-foreground">Fetching the latest conditions</p>
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <Card className="apple-card p-16 text-center max-w-md mx-auto">
+          <div className="space-y-6">
+            <div className="text-6xl animate-apple-float">⛅</div>
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-foreground">Loading Weather</h2>
+              <p className="text-sm text-muted-foreground">Getting the latest conditions...</p>
+            </div>
           </div>
         </Card>
       </div>
@@ -24,16 +26,18 @@ const WeatherDashboard = () => {
 
   if (error || !weather) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="glass-card p-8 text-center max-w-md">
-          <div className="space-y-4">
-            <div className="text-6xl">⚠️</div>
-            <h2 className="text-xl font-semibold text-foreground">Weather Unavailable</h2>
-            <p className="text-muted-foreground">{error || 'Failed to load weather data'}</p>
-            <Button onClick={refreshWeather} className="mt-4">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Try Again
-            </Button>
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <Card className="apple-card p-12 text-center max-w-md mx-auto">
+          <div className="space-y-6">
+            <div className="text-5xl">⚠️</div>
+            <div className="space-y-3">
+              <h2 className="text-lg font-semibold text-foreground">Unable to Load Weather</h2>
+              <p className="text-sm text-muted-foreground">{error || 'Please try again'}</p>
+              <Button onClick={refreshWeather} className="apple-button mt-4">
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Retry
+              </Button>
+            </div>
           </div>
         </Card>
       </div>
@@ -41,91 +45,98 @@ const WeatherDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen p-6 space-y-8">
-      {/* Header */}
-      <div className="text-center space-y-2 animate-weather-fade-in">
-        <h1 className="text-5xl font-bold text-foreground text-shadow-lg mb-2">
-          Weather Universe
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          Experience weather in a new dimension
-        </p>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8">
-        {/* 3D Weather Scene */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold text-foreground flex items-center gap-2">
-              <span className="text-3xl">🌐</span>
-              Interactive Weather Scene
-            </h2>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={refreshWeather}
-              className="glass-card border-white/30 hover:bg-white/20"
-            >
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
-            </Button>
-          </div>
-          
-          <Card className="glass-card p-2 overflow-hidden">
-            <WeatherScene3D 
-              weatherCondition={weather.condition} 
-              temperature={weather.temperature}
-            />
-          </Card>
-          
-          <p className="text-sm text-muted-foreground text-center">
-            🖱️ Drag to explore • 3D scene adapts to weather conditions
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <div className="container mx-auto px-6 py-12 space-y-12">
+        {/* Hero Section */}
+        <div className="text-center space-y-4 animate-apple-fade-up">
+          <h1 className="apple-hero-title">
+            Weather
+          </h1>
+          <p className="apple-subtitle max-w-2xl mx-auto">
+            Beautiful, precise weather information with an immersive 3D experience
           </p>
         </div>
 
-        {/* Weather Information */}
-        <div className="space-y-6">
-          <WeatherCard weather={weather} />
-          
-          {/* Additional Weather Info */}
-          <div className="grid grid-cols-2 gap-4">
-            <Card className="glass-card p-6 text-center">
-              <div className="space-y-3">
-                <div className="text-4xl animate-pulse-glow">🌡️</div>
-                <div className="text-sm text-muted-foreground">Feels Like</div>
-                <div className="text-2xl font-bold text-primary">
-                  {Math.round(weather.temperature + (Math.random() * 4 - 2))}°
-                </div>
-              </div>
-            </Card>
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {/* Weather Card - Takes up more space */}
+          <div className="lg:col-span-1 space-y-6">
+            <WeatherCard weather={weather} />
             
-            <Card className="glass-card p-6 text-center">
-              <div className="space-y-3">
-                <div className="text-4xl animate-drift">👁️</div>
-                <div className="text-sm text-muted-foreground">Visibility</div>
-                <div className="text-2xl font-bold text-primary">
-                  {weather.condition.includes('rain') ? '5' : '10'} km
+            {/* Location Card */}
+            <Card className="apple-card p-6 bg-white/80 backdrop-blur-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-5 h-5 text-primary" />
+                  <div>
+                    <div className="text-sm font-medium text-foreground">{weather.location}</div>
+                    <div className="text-xs text-muted-foreground">Current Location</div>
+                  </div>
                 </div>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={refreshWeather}
+                  className="text-primary hover:bg-primary/10"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                </Button>
               </div>
             </Card>
           </div>
 
-          {/* Location Info */}
-          <Card className="glass-card p-6">
-            <div className="flex items-center justify-center space-x-2 text-muted-foreground">
-              <MapPin className="w-5 h-5" />
-              <span>Real-time data for {weather.location}</span>
+          {/* 3D Scene - Takes up more space */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="apple-card p-4 bg-white/80 backdrop-blur-lg">
+              <WeatherScene3D 
+                weatherCondition={weather.condition} 
+                temperature={weather.temperature}
+              />
+            </Card>
+            
+            {/* Additional Metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Card className="apple-card p-4 bg-white/60 backdrop-blur-lg text-center">
+                <Thermometer className="w-6 h-6 text-primary mx-auto mb-2" />
+                <div className="text-xs text-muted-foreground mb-1">Feels Like</div>
+                <div className="text-lg font-semibold text-foreground">
+                  {Math.round(weather.temperature + (Math.random() * 4 - 2))}°
+                </div>
+              </Card>
+              
+              <Card className="apple-card p-4 bg-white/60 backdrop-blur-lg text-center">
+                <Wind className="w-6 h-6 text-primary mx-auto mb-2" />
+                <div className="text-xs text-muted-foreground mb-1">Wind</div>
+                <div className="text-lg font-semibold text-foreground">
+                  {weather.windSpeed} km/h
+                </div>
+              </Card>
+              
+              <Card className="apple-card p-4 bg-white/60 backdrop-blur-lg text-center">
+                <Droplets className="w-6 h-6 text-primary mx-auto mb-2" />
+                <div className="text-xs text-muted-foreground mb-1">Humidity</div>
+                <div className="text-lg font-semibold text-foreground">
+                  {weather.humidity}%
+                </div>
+              </Card>
+              
+              <Card className="apple-card p-4 bg-white/60 backdrop-blur-lg text-center">
+                <Eye className="w-6 h-6 text-primary mx-auto mb-2" />
+                <div className="text-xs text-muted-foreground mb-1">Visibility</div>
+                <div className="text-lg font-semibold text-foreground">
+                  {weather.condition.includes('rain') ? '5' : '10'} km
+                </div>
+              </Card>
             </div>
-          </Card>
+          </div>
         </div>
-      </div>
 
-      {/* Footer */}
-      <div className="text-center pt-8">
-        <p className="text-sm text-muted-foreground">
-          Powered by advanced 3D weather visualization • Built with React Three Fiber
-        </p>
+        {/* Footer */}
+        <div className="text-center pt-8">
+          <p className="text-xs text-muted-foreground">
+            Powered by advanced 3D visualization • Designed with precision
+          </p>
+        </div>
       </div>
     </div>
   );
