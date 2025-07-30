@@ -32,7 +32,7 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
   const { high, low } = getTemperatureRange(weather.temperature);
 
   return (
-    <Card className="apple-card p-8 bg-white/80 backdrop-blur-lg">
+    <Card className="apple-card p-8 bg-white/80 backdrop-blur-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
       <div className="space-y-6">
         {/* Header */}
         <div className="text-center space-y-1">

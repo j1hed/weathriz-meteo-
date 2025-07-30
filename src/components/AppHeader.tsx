@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 
 const AppHeader = () => {
   const location = useLocation();
-  
+
   const navItems = [
     { icon: Home, label: 'Today', path: '/' },
     { icon: Calendar, label: 'Forecast', path: '/forecast' },
@@ -13,82 +13,80 @@ const AppHeader = () => {
     { icon: Settings, label: 'Settings', path: '/settings' },
   ];
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 apple-blur bg-white/80 border-b border-border/20">
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="text-2xl">🌤️</div>
-            <h1 className="text-xl font-semibold text-foreground">Weather</h1>
-          </Link>
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-blue-100">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center space-x-2">
+          <span className="text-2xl" style={{ color: '#3b82f6' }}>🌤️</span>
+          <span className="text-lg font-bold text-blue-500">Weather</span>
+        </Link>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.path);
+            return (
+              <Link key={item.path} to={item.path}>
+                <Button
+                  variant="ghost"
+                  className={`flex items-center space-x-1 px-3 py-1 rounded transition-colors
+                    ${active
+                      ? 'text-blue-500 border-b-2 border-pink-400 bg-white'
+                      : 'text-blue-400 hover:text-pink-400'}
+                  `}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="text-sm">{item.label}</span>
+                </Button>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Actions */}
+        <div className="flex items-center space-x-1">
+          <Link to="/search">
+            <Button variant="ghost" size="sm" className="p-2 text-blue-400 hover:text-pink-400">
+              <Search className="w-4 h-4" />
+            </Button>
+          </Link>
+          <Link to="/locations">
+            <Button variant="ghost" size="sm" className="p-2 text-blue-400 hover:text-pink-400">
+              <Plus className="w-4 h-4" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden px-2 pb-2">
+        <Card className="apple-card p-1 bg-white/80 backdrop-blur-lg rounded-lg border border-blue-100">
+          <div className="flex justify-between">
             {navItems.map((item) => {
               const Icon = item.icon;
+              const active = isActive(item.path);
               return (
-                <Link key={item.path} to={item.path}>
+                <Link key={item.path} to={item.path} className="flex-1">
                   <Button
                     variant="ghost"
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                      isActive(item.path)
-                        ? 'bg-primary/10 text-primary font-medium'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    }`}
+                    className={`w-full flex flex-col items-center py-2 px-0 transition-colors
+                      ${active
+                        ? 'text-blue-500 font-semibold'
+                        : 'text-blue-400 hover:text-pink-400'}
+                    `}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-sm">{item.label}</span>
+                    <Icon className={`w-5 h-5 ${active ? 'text-pink-400' : 'text-blue-400'}`} />
+                    <span className={`text-xs ${active ? 'text-blue-500' : 'text-blue-400'}`}>{item.label}</span>
                   </Button>
                 </Link>
               );
             })}
-          </nav>
-
-          {/* Action Buttons */}
-          <div className="flex items-center space-x-2">
-            <Link to="/search">
-              <Button variant="ghost" size="sm" className="p-2">
-                <Search className="w-4 h-4" />
-              </Button>
-            </Link>
-            <Link to="/locations">
-              <Button variant="ghost" size="sm" className="p-2">
-                <Plus className="w-4 h-4" />
-              </Button>
-            </Link>
           </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className="md:hidden mt-4">
-          <Card className="apple-card p-2">
-            <div className="flex justify-around">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link key={item.path} to={item.path} className="flex-1">
-                    <Button
-                      variant="ghost"
-                      className={`w-full flex flex-col items-center space-y-1 py-3 ${
-                        isActive(item.path)
-                          ? 'bg-primary/10 text-primary'
-                          : 'text-muted-foreground'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                      <span className="text-xs">{item.label}</span>
-                    </Button>
-                  </Link>
-                );
-              })}
-            </div>
-          </Card>
-        </div>
+        </Card>
       </div>
     </header>
   );

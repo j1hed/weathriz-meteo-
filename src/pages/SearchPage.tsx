@@ -38,7 +38,6 @@ const SearchPage = () => {
 
   const mockSearch = (query: string) => {
     setIsSearching(true);
-    
     setTimeout(() => {
       if (query.length > 0) {
         const filtered = popularLocations.filter(location =>
@@ -46,8 +45,6 @@ const SearchPage = () => {
           location.country.toLowerCase().includes(query.toLowerCase()) ||
           location.region.toLowerCase().includes(query.toLowerCase())
         );
-        
-        // Add some mock results
         const mockResults: SearchResult[] = [
           ...filtered,
           ...(query.length > 2 ? [
@@ -55,7 +52,6 @@ const SearchPage = () => {
             { id: '101', name: `${query} City`, country: 'Example Country', region: 'Example State', temperature: 23, condition: 'Partly Cloudy' }
           ] : [])
         ];
-        
         setSearchResults(mockResults);
       } else {
         setSearchResults([]);
@@ -79,27 +75,33 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
-      <div className="container mx-auto px-6 py-8 space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50 relative">
+      {/* Gradient accent bar */}
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 via-teal-300 to-white opacity-30 z-10" />
+      <div className="container mx-auto px-6 py-12 space-y-12 relative z-20">
         {/* Header */}
-        <div className="space-y-4">
-          <h1 className="apple-hero-title text-4xl">Search Locations</h1>
-          <p className="apple-subtitle">Find weather information for any city worldwide</p>
+        <div className="space-y-4 text-center animate-fade-in-up">
+          <h1 className="apple-hero-title text-5xl font-extrabold bg-gradient-to-r from-blue-500 via-teal-400 to-white bg-clip-text text-transparent drop-shadow-lg">
+            Search Locations
+          </h1>
+          <p className="apple-subtitle text-lg text-muted-foreground">
+            Find weather information for any city worldwide
+          </p>
         </div>
 
         {/* Search Bar */}
-        <Card className="apple-card p-6">
+        <Card className="apple-card p-8 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl animate-fade-in-left">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-400" />
             <Input
               placeholder="Search for a city, country, or region..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="pl-12 pr-4 py-4 text-lg bg-white/80 border-0 focus:ring-2 focus:ring-primary/20"
+              className="pl-12 pr-4 py-4 text-lg bg-white/80 border-0 focus:ring-2 focus:ring-blue-300 rounded-full"
             />
             {isSearching && (
               <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                <div className="animate-spin w-5 h-5 border-2 border-primary border-t-transparent rounded-full" />
+                <div className="animate-spin w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full" />
               </div>
             )}
           </div>
@@ -107,24 +109,23 @@ const SearchPage = () => {
 
         {/* Search Results */}
         {searchQuery.length > 0 && (
-          <Card className="apple-card p-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-foreground flex items-center">
+          <Card className="apple-card p-8 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl animate-fade-in-up">
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-foreground flex items-center">
                 <Search className="w-5 h-5 mr-2" />
                 Search Results
               </h2>
-              
               {searchResults.length > 0 ? (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {searchResults.map((result) => (
-                    <Card 
-                      key={result.id} 
-                      className="apple-card p-4 hover:shadow-lg transition-all duration-200 cursor-pointer bg-white/60 hover:bg-white/80"
+                    <Card
+                      key={result.id}
+                      className="apple-card p-4 hover:shadow-xl transition-all duration-200 cursor-pointer bg-white/60 hover:bg-teal-50 rounded-xl"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                          <div className="p-2 bg-primary/10 rounded-lg">
-                            <MapPin className="w-4 h-4 text-primary" />
+                          <div className="p-2 bg-blue-100 rounded-lg">
+                            <MapPin className="w-4 h-4 text-blue-500" />
                           </div>
                           <div>
                             <div className="font-semibold text-foreground">{result.name}</div>
@@ -133,17 +134,16 @@ const SearchPage = () => {
                             </div>
                           </div>
                           {result.isPopular && (
-                            <Badge variant="secondary" className="bg-amber-100 text-amber-800">
+                            <Badge variant="secondary" className="bg-teal-100 text-teal-800 shadow">
                               <TrendingUp className="w-3 h-3 mr-1" />
                               Popular
                             </Badge>
                           )}
                         </div>
-                        
                         <div className="flex items-center space-x-3">
                           <span className="text-2xl">{getWeatherIcon(result.condition)}</span>
                           <div className="text-right">
-                            <div className="text-xl font-semibold text-foreground">
+                            <div className="text-xl font-semibold text-blue-500">
                               {result.temperature}°
                             </div>
                             <div className="text-xs text-muted-foreground">
@@ -170,19 +170,18 @@ const SearchPage = () => {
 
         {/* Recent Searches */}
         {searchQuery.length === 0 && (
-          <Card className="apple-card p-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-foreground flex items-center">
+          <Card className="apple-card p-8 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl animate-fade-in-right">
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-foreground flex items-center">
                 <Clock className="w-5 h-5 mr-2" />
                 Recent Searches
               </h2>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {recentSearches.map((search, index) => (
                   <Button
                     key={index}
                     variant="outline"
-                    className="justify-start bg-white/60 hover:bg-white/80"
+                    className="justify-start bg-white/60 hover:bg-teal-50 rounded-full"
                     onClick={() => handleSearch(search)}
                   >
                     <Clock className="w-4 h-4 mr-2" />
@@ -196,37 +195,35 @@ const SearchPage = () => {
 
         {/* Popular Locations */}
         {searchQuery.length === 0 && (
-          <Card className="apple-card p-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-foreground flex items-center">
+          <Card className="apple-card p-8 bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl animate-fade-in-up">
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-foreground flex items-center">
                 <TrendingUp className="w-5 h-5 mr-2" />
                 Popular Locations
               </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {popularLocations.map((location) => (
-                  <Card 
-                    key={location.id} 
-                    className="apple-card p-4 hover:shadow-lg transition-all duration-200 cursor-pointer bg-white/60 hover:bg-white/80"
+                  <Card
+                    key={location.id}
+                    className="apple-card p-4 hover:shadow-xl transition-all duration-200 cursor-pointer bg-white/60 hover:bg-teal-50 rounded-xl"
                     onClick={() => handleSearch(location.name)}
                   >
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-semibold text-foreground">{location.name}</h3>
+                          <h3 className="font-semibold text-blue-500">{location.name}</h3>
                           <p className="text-sm text-muted-foreground">{location.country}</p>
                         </div>
-                        <Badge variant="secondary" className="bg-primary/10 text-primary">
+                        <Badge variant="secondary" className="bg-teal-100 text-teal-800 shadow">
                           <Star className="w-3 h-3 mr-1" />
                           Popular
                         </Badge>
                       </div>
-                      
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                           <span className="text-2xl">{getWeatherIcon(location.condition)}</span>
                           <div>
-                            <div className="text-lg font-semibold text-foreground">
+                            <div className="text-lg font-semibold text-blue-500">
                               {location.temperature}°
                             </div>
                             <div className="text-xs text-muted-foreground">
