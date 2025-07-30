@@ -1,45 +1,53 @@
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import WeatherScene3D from './WeatherScene3D';
 import WeatherCard from './WeatherCard';
 import useWeather from '@/hooks/useWeather';
 import { RefreshCw, MapPin, Thermometer, Wind, Eye, Droplets } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 const WeatherDashboard = () => {
   const { weather, loading, error, refreshWeather } = useWeather();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <Card className="apple-card p-16 text-center max-w-md mx-auto">
-          <div className="space-y-6">
-            <div className="text-6xl animate-apple-float">⛅</div>
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-foreground">Loading Weather</h2>
-              <p className="text-sm text-muted-foreground">Getting the latest conditions...</p>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+        <div className="container mx-auto px-6 py-12">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <Card className="apple-card p-16 text-center max-w-md mx-auto">
+              <div className="space-y-6">
+                <div className="text-6xl animate-apple-float">⛅</div>
+                <div className="space-y-2">
+                  <h2 className="text-xl font-semibold text-foreground">Loading Weather</h2>
+                  <p className="text-sm text-muted-foreground">Getting the latest conditions...</p>
+                </div>
+              </div>
+            </Card>
           </div>
-        </Card>
+        </div>
       </div>
     );
   }
 
   if (error || !weather) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <Card className="apple-card p-12 text-center max-w-md mx-auto">
-          <div className="space-y-6">
-            <div className="text-5xl">⚠️</div>
-            <div className="space-y-3">
-              <h2 className="text-lg font-semibold text-foreground">Unable to Load Weather</h2>
-              <p className="text-sm text-muted-foreground">{error || 'Please try again'}</p>
-              <Button onClick={refreshWeather} className="apple-button mt-4">
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Retry
-              </Button>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+        <div className="container mx-auto px-6 py-12">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <Card className="apple-card p-12 text-center max-w-md mx-auto">
+              <div className="space-y-6">
+                <div className="text-5xl">⚠️</div>
+                <div className="space-y-3">
+                  <h2 className="text-lg font-semibold text-foreground">Unable to Load Weather</h2>
+                  <p className="text-sm text-muted-foreground">{error || 'Please try again'}</p>
+                  <Button onClick={refreshWeather} className="apple-button mt-4">
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Retry
+                  </Button>
+                </div>
+              </div>
+            </Card>
           </div>
-        </Card>
+        </div>
       </div>
     );
   }
@@ -50,10 +58,10 @@ const WeatherDashboard = () => {
         {/* Hero Section */}
         <div className="text-center space-y-4 animate-apple-fade-up">
           <h1 className="apple-hero-title">
-            Weather
+            Today's Weather
           </h1>
           <p className="apple-subtitle max-w-2xl mx-auto">
-            Beautiful, precise weather information with an immersive 3D experience
+            Current conditions with an immersive 3D experience
           </p>
         </div>
 
