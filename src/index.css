@@ -2,41 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Weather-themed design system with dynamic colors and glassmorphism effects */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base theme - Clear Sky */
+    --background: 203 100% 96%;
+    --foreground: 220 25% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Glass cards with transparency */
+    --card: 203 30% 95%;
+    --card-foreground: 220 25% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 203 30% 98%;
+    --popover-foreground: 220 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Weather-themed primary colors */
+    --primary: 211 85% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 211 100% 75%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 203 50% 85%;
+    --secondary-foreground: 220 25% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 203 40% 90%;
+    --muted-foreground: 220 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 90% 65%;
+    --accent-foreground: 220 25% 15%;
+
+    /* Weather condition colors */
+    --sunny: 45 100% 60%;
+    --cloudy: 210 15% 65%;
+    --rainy: 211 50% 45%;
+    --stormy: 270 30% 35%;
+    --snowy: 200 25% 85%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 203 40% 85%;
+    --input: 203 40% 90%;
+    --ring: 211 85% 55%;
 
-    --radius: 0.5rem;
+    /* Glass effects */
+    --glass-bg: 203 50% 95%;
+    --glass-border: 203 40% 80%;
+    --glass-shadow: 203 30% 70%;
+
+    /* Weather gradients */
+    --gradient-sky: linear-gradient(135deg, hsl(203, 100%, 85%) 0%, hsl(211, 85%, 70%) 100%);
+    --gradient-sunset: linear-gradient(135deg, hsl(45, 90%, 75%) 0%, hsl(25, 85%, 65%) 50%, hsl(340, 75%, 65%) 100%);
+    --gradient-storm: linear-gradient(135deg, hsl(270, 30%, 25%) 0%, hsl(240, 40%, 35%) 100%);
+    --gradient-night: linear-gradient(135deg, hsl(240, 60%, 15%) 0%, hsl(260, 50%, 25%) 100%);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +121,65 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-sky);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/20 border border-white/30 shadow-lg shadow-black/5;
+  }
+  
+  .weather-gradient-sky {
+    background: var(--gradient-sky);
+  }
+  
+  .weather-gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+  
+  .weather-gradient-storm {
+    background: var(--gradient-storm);
+  }
+  
+  .weather-gradient-night {
+    background: var(--gradient-night);
+  }
+  
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(33, 150, 243, 0.6);
   }
 }
